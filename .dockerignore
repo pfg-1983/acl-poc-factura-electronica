@@ -1,0 +1,7 @@
+.gitignore
+Dockerfile
+*.md
+oracle/
+node_modules/
+.vscode/
+

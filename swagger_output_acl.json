@@ -1,0 +1,302 @@
+{
+  "swagger": "3.0",
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "POC generar DTE",
+    "description": "ACL para POC de generacion de DTE",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api"
+    }
+  ],
+  "paths": {
+    "/dte/facura */ /* \n\n #swagger.parameters[": {
+      "post": {
+        "tags": [
+          "DTE"
+        ],
+        "description": "POC generación facturas electronica",
+        "parameters": [
+          {
+            "name": "x-country",
+            "in": "header",
+            "description": "Codigo del país bajo el estándar ISO 3166-1 alpha2",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CL",
+                "CO",
+                "PE"
+              ]
+            }
+          },
+          {
+            "name": "x-commerce",
+            "in": "header",
+            "description": "Comercio indicado por el consumidor del servicio",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ICONSTRUYE"
+              ]
+            }
+          },
+          {
+            "name": "x-customerid",
+            "in": "header",
+            "description": "Nombre asociado al comercio",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "TOCTOC",
+                "IBUILDER"
+              ]
+            }
+          },
+          {
+            "name": "x-channel",
+            "in": "header",
+            "description": "Identificador del canal",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "DiGITAL",
+                "FISICO"
+              ]
+            }
+          },
+          {
+            "name": "x-api-version",
+            "in": "header",
+            "description": "Representa la versión de la API - Ej: 1.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta en caso de creación correcta",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusOK"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqContract"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/ReqContract"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dteSii": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ReqContract": {
+        "type": "object",
+        "properties": {
+          "tipoDocumento": {
+            "type": "number",
+            "example": 33
+          },
+          "fechaEmision": {
+            "type": "string",
+            "example": "2020-07-10T00:00:00.000Z"
+          },
+          "emisor": {
+            "type": "object",
+            "properties": {
+              "rutEmisor": {
+                "type": "string",
+                "example": ""
+              },
+              "razonSocial": {
+                "type": "string",
+                "example": ""
+              },
+              "giroEmisor": {
+                "type": "string",
+                "example": ""
+              },
+              "direccionOrigen": {
+                "type": "string",
+                "example": ""
+              },
+              "comuna": {
+                "type": "string",
+                "example": ""
+              },
+              "ciudad": {
+                "type": "string",
+                "example": ""
+              }
+            },
+            "required": [
+              "rutEmisor",
+              "razonSocial",
+              "giroEmisor",
+              "direccionOrigen",
+              "comuna",
+              "ciudad"
+            ]
+          },
+          "receptor": {
+            "type": "object",
+            "properties": {
+              "rutReceptor": {
+                "type": "string",
+                "example": ""
+              },
+              "razonSocial": {
+                "type": "string",
+                "example": ""
+              },
+              "giroReceptor": {
+                "type": "string",
+                "example": ""
+              },
+              "direccionOrigen": {
+                "type": "string",
+                "example": ""
+              },
+              "comuna": {
+                "type": "string",
+                "example": ""
+              },
+              "ciudad": {
+                "type": "string",
+                "example": ""
+              }
+            },
+            "required": [
+              "rutReceptor",
+              "razonSocial",
+              "giroReceptor",
+              "direccionOrigen",
+              "comuna",
+              "ciudad"
+            ]
+          },
+          "totales": {
+            "type": "object",
+            "properties": {
+              "totales": {
+                "type": "number",
+                "example": 240
+              },
+              "iva": {
+                "type": "number",
+                "example": 47
+              },
+              "montoTotal": {
+                "type": "number",
+                "example": 247
+              }
+            },
+            "required": [
+              "totales",
+              "iva",
+              "montoTotal"
+            ]
+          },
+          "Detalle": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nombreItem": {
+                  "type": "string",
+                  "example": "circulo"
+                },
+                "detalleItem": {
+                  "type": "string",
+                  "example": ""
+                },
+                "catidadItem": {
+                  "type": "number",
+                  "example": 1
+                },
+                "valorItem": {
+                  "type": "number",
+                  "example": 50
+                },
+                "montoItem": {
+                  "type": "number",
+                  "example": 50
+                }
+              },
+              "required": [
+                "nombreItem",
+                "catidadItem",
+                "valorItem",
+                "montoItem"
+              ]
+            }
+          }
+        },
+        "required": [
+          "tipoDocumento",
+          "fechaEmision",
+          "emisor",
+          "receptor",
+          "totales",
+          "Detalle"
+        ],
+        "xml": {
+          "name": "ReqContract"
+        }
+      },
+      "StatusOK": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "ACEPTADO"
+          },
+          "numeroFolio": {
+            "type": "number",
+            "example": 12
+          }
+        },
+        "xml": {
+          "name": "StatusOK"
+        }
+      }
+    }
+  }
+}
